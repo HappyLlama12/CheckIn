@@ -148,7 +148,6 @@ https://docs.google.com/forms/d/e/FORM_ID/formResponse and the input name must b
       // cleanup after a short delay
       setTimeout(()=>{ try{ document.body.removeChild(form);}catch(e){} }, 1500);
 
-      status.textContent = 'Checked in — thanks!';
     }
 
     submitBtn.addEventListener('click', ()=>{
@@ -161,6 +160,7 @@ https://docs.google.com/forms/d/e/FORM_ID/formResponse and the input name must b
       submitToGoogle(digits);
       clearDisplay();
       status.textContent = "Checked in — thanks!";
+      status.classList.remove("status-auto");
     });
 
     // on load: if saved, auto-submit
@@ -174,7 +174,8 @@ https://docs.google.com/forms/d/e/FORM_ID/formResponse and the input name must b
     setTimeout(() => {
       clearDisplay();
       status.textContent = "";
-    }, 50000);
+      status.classList.remove("status-auto");
+    }, 5000);
   } else {
     clearDisplay();
   }
