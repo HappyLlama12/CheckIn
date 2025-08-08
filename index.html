@@ -41,6 +41,10 @@ https://docs.google.com/forms/d/e/FORM_ID/formResponse and the input name must b
     .footer{margin-top:12px;font-size:12px;color:var(--muted)}
     .danger{color:#b00020}
     .row{display:flex;gap:8px}
+     .status-auto {
+        color: #0b5cff; /* nice blue */
+        font-weight: 600;
+      }
   </style>
 </head>
 <body>
@@ -105,7 +109,11 @@ https://docs.google.com/forms/d/e/FORM_ID/formResponse and the input name must b
       display.textContent = next.padEnd(4,'•');
     }
 
-    function clearDisplay(){ display.textContent = '----'; }
+    function clearDisplay() {
+     display.textContent = "----";
+     status.textContent = "";
+     status.classList.remove("status-auto");
+   }
     clearBtn.addEventListener('click', clearDisplay);
 
     function forgetMe(){
@@ -152,19 +160,21 @@ https://docs.google.com/forms/d/e/FORM_ID/formResponse and the input name must b
       localStorage.setItem('clubUID', digits);
       submitToGoogle(digits);
       clearDisplay();
+      status.textContent = "Checked in — thanks!";
     });
 
     // on load: if saved, auto-submit
     window.addEventListener("load", () => {
   const saved = localStorage.getItem("clubUID");
   if (saved && saved.length === MAX_DIGITS) {
+    status.classList.add("status-auto");
     status.textContent = "Welcome back — automatically checked you in!";
     submitToGoogle(saved);
     // Keep the message visible for 5 seconds, then clear display and status
     setTimeout(() => {
       clearDisplay();
       status.textContent = "";
-    }, 3000);
+    }, 50000);
   } else {
     clearDisplay();
   }
