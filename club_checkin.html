@@ -155,16 +155,20 @@ https://docs.google.com/forms/d/e/FORM_ID/formResponse and the input name must b
     });
 
     // on load: if saved, auto-submit
-    window.addEventListener('load', ()=>{
-      const saved = localStorage.getItem('clubUID');
-      if(saved && saved.length === MAX_DIGITS){
-        status.textContent = 'Welcome back — checking you in...';
-        // small timeout to give the iframe a moment
-        setTimeout(()=> submitToGoogle(saved), 300);
-      } else {
-        clearDisplay();
-      }
-    });
+    window.addEventListener("load", () => {
+  const saved = localStorage.getItem("clubUID");
+  if (saved && saved.length === MAX_DIGITS) {
+    status.textContent = "Welcome back — automatically checked you in!";
+    submitToGoogle(saved);
+    // Keep the message visible for 5 seconds, then clear display and status
+    setTimeout(() => {
+      clearDisplay();
+      status.textContent = "";
+    }, 3000);
+  } else {
+    clearDisplay();
+  }
+   });
 
   </script>
 </body>
